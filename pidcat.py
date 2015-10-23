@@ -47,6 +47,7 @@ parser.add_argument('-i', '--ignore-tag', dest='ignored_tag', action='append', h
 parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__, help='Print the version number and exit')
 parser.add_argument('--time', dest='time', action='store_true', default=False, help='Print time')
 parser.add_argument('-a', '--all', dest='all', action='store_true', default=False, help='Print all log messages')
+parser.add_argument('-n', '--no-color', dest='no_color', action='store_true', default=False, help='Do not use colorful output')
 
 args = parser.parse_args()
 min_level = LOG_LEVELS_MAP[args.min_level.upper()]
@@ -98,7 +99,10 @@ def termcolor(fg=None, bg=None):
   return '\033[%sm' % ';'.join(codes) if codes else ''
 
 def colorize(message, fg=None, bg=None):
-  return termcolor(fg, bg) + message + RESET
+   if args.no_color:
+     return message
+   else:
+     return termcolor(fg, bg) + message + RESET
 
 def indent_wrap(message):
   if width == -1:
