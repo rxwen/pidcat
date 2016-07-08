@@ -281,8 +281,8 @@ while adb.poll() is None:
     line = adb.stdout.readline().decode('utf-8', 'replace').strip()
   except KeyboardInterrupt:
     break
-  if len(line) == 0:
-    break
+  # if len(line) == 0:
+    # break
 
   bug_line = BUG_LINE.match(line)
   if bug_line is not None:
